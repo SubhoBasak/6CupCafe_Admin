@@ -36,6 +36,11 @@ const Appbar = () => {
             Customers
           </Link>
         </Nav.Item>
+        <Nav.Item>
+          <Link to="/delivery" className="nav-link">
+            Delivery
+          </Link>
+        </Nav.Item>
       </Nav>
     </>
   );

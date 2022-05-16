@@ -5,6 +5,7 @@ import "./App.css";
 import Appbar from "./components/Appbar";
 
 import Customers from "./pages/Customers";
+import Delivery from "./pages/Delivery";
 import Inventory from "./pages/Inventory";
 import Login from "./pages/Login";
 import Product from "./pages/Product";
@@ -18,6 +19,7 @@ const App = () => {
       <Appbar />
       <Routes>
         <Route path="/customers" element={<Customers />} />
+        <Route path="/delivery" element={<Delivery />} />
         <Route path="/inventory" element={<Inventory />} />
         <Route path="/login" element={<Login />} />
         <Route path="/product/:pid" element={<Product />} />
