@@ -37,7 +37,16 @@ const Customers = () => {
               <td>{cst.phone}</td>
               <td>{cst.reward}</td>
               <td>
-                <Button variant="outline-success">Details</Button>
+                <Button
+                  variant="outline-success"
+                  onClick={() =>
+                    navigate(
+                      `/customer/${cst._id}/${cst.name}/${cst.phone}/${cst.reward}`
+                    )
+                  }
+                >
+                  Details
+                </Button>
               </td>
             </tr>
           ))}

@@ -9,11 +9,13 @@ import {
   Table,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import EditDeliery from "../../components/EditDelivery";
 
 const Delivery = () => {
   const [allDels, setAllDels] = React.useState([]);
   const [name, setName] = React.useState("");
   const [charge, setCharge] = React.useState(0);
+  const [edit, setEdit] = React.useState({});
 
   const navigate = useNavigate();
 
@@ -86,15 +88,26 @@ const Delivery = () => {
             {allDels.map((delv, index) => (
               <tr key={index}>
                 <td>{delv.name}</td>
-                <td>{delv.charge}</td>
+                <td>{delv.charge} %</td>
                 <td>
-                  <Button variant="outline-warning">Edit</Button>
                   <Button
                     variant="outline-danger"
-                    className="ms-2"
                     onClick={() => delDelvApi(delv._id)}
                   >
-                    Delete
+                    Remove
+                  </Button>
+                  <Button
+                    variant="outline-primary"
+                    className="ms-2"
+                    onClick={() =>
+                      setEdit({
+                        did: delv._id,
+                        name: delv.name,
+                        charge: delv.charge,
+                      })
+                    }
+                  >
+                    Edit
                   </Button>
                 </td>
               </tr>
@@ -136,6 +149,23 @@ const Delivery = () => {
           </div>
         </Form>
       </Col>
+      {edit.did ? (
+        <EditDeliery
+          did={edit.did}
+          name={edit.name}
+          charge={edit.charge}
+          close={() => setEdit({})}
+          update={(name, charge) => {
+            for (let i = 0; i < allDels.length; i++)
+              if (allDels[i]._id === edit.did) {
+                allDels[i].name = name;
+                allDels[i].charge = charge;
+                setAllDels([...allDels]);
+                return;
+              }
+          }}
+        />
+      ) : null}
     </Row>
   );
 };

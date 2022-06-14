@@ -1,4 +1,5 @@
 import React from "react";
+import { Badge } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "./style.css";
 
@@ -15,6 +16,11 @@ const ProductCard = (props) => {
         alt="product"
       />
       <p>{props.name}</p>
+      {props.stock ? null : (
+        <Badge pill bg="danger" className="stock-out">
+          Out of Stock
+        </Badge>
+      )}
       <p className="fw-bold text-danger">Rs. {props.price}</p>
     </div>
   );

@@ -4,6 +4,7 @@ import "./App.css";
 
 import Appbar from "./components/Appbar";
 
+import Customer from "./pages/Customer";
 import Customers from "./pages/Customers";
 import Delivery from "./pages/Delivery";
 import Inventory from "./pages/Inventory";
@@ -12,12 +13,17 @@ import Product from "./pages/Product";
 import Products from "./pages/Products";
 import Purchase from "./pages/Purchase";
 import Stuffs from "./pages/Stuffs";
+import Tax from "./pages/Tax";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Appbar />
       <Routes>
+        <Route
+          path="/customer/:cid/:name/:phone/:reward"
+          element={<Customer />}
+        />
         <Route path="/customers" element={<Customers />} />
         <Route path="/delivery" element={<Delivery />} />
         <Route path="/inventory" element={<Inventory />} />
@@ -26,6 +32,7 @@ const App = () => {
         <Route path="/products" element={<Products />} />
         <Route path="/purchase/:iid" element={<Purchase />} />
         <Route path="/stuffs" element={<Stuffs />} />
+        <Route path="/tax" element={<Tax />} />
       </Routes>
     </BrowserRouter>
   );

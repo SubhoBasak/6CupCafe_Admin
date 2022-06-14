@@ -115,6 +115,7 @@ const Products = () => {
                   name={prod.name}
                   price={prod.price}
                   pid={prod._id}
+                  stock={prod.inStock}
                 />
               );
           })}

@@ -41,6 +41,11 @@ const Appbar = () => {
             Delivery
           </Link>
         </Nav.Item>
+        <Nav.Item>
+          <Link to="/tax" className="nav-link">
+            Tax
+          </Link>
+        </Nav.Item>
       </Nav>
     </>
   );
