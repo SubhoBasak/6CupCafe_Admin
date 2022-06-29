@@ -50,6 +50,25 @@ const Product = () => {
     });
   };
 
+  const delProductApi = () => {
+    if (!window.confirm("Do you really want to delete this product?")) return;
+
+    fetch(process.env.REACT_APP_BASE_URL + "/product", {
+      method: "DELETE",
+      headers: {
+        Authorization: localStorage.getItem("token"),
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ pid }),
+    }).then((res) => {
+      if (res.status === 200 || res.status === 404)
+        return navigate("/products");
+      else if (res.status === 401 || res.status === 405)
+        return navigate("/login");
+      else return alert("Something went wrong! Please try again.");
+    });
+  };
+
   const setStockApi = (e) => {
     e.preventDefault();
 
@@ -231,7 +250,16 @@ const Product = () => {
             </FormSelect>
           </div>
           <div className="mb-3 d-flex justify-content-center">
-            <Button type="submit">Save</Button>
+            <Button variant="outline-primary" type="submit">
+              Save
+            </Button>
+            <Button
+              variant="outline-danger"
+              className="ms-2"
+              onClick={delProductApi}
+            >
+              Delete
+            </Button>
           </div>
         </Form>
       </Col>
@@ -261,7 +289,7 @@ const Product = () => {
             </div>
           </Form>
         </div>
-        <div className="w-100 mt-2 border border-1 p-2 rounded">
+        {/* <div className="w-100 mt-2 border border-1 p-2 rounded">
           <p className="w-100 text-center text-warning fs-4">Ingredients</p>
           <hr />
           {prodIngs.map((ping, index) => (
@@ -317,7 +345,7 @@ const Product = () => {
               Save
             </Button>
           </div>
-        </Form>
+        </Form> */}
       </Col>
     </Row>
   );

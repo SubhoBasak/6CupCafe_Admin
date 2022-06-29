@@ -21,11 +21,11 @@ const Appbar = () => {
             Products
           </Link>
         </Nav.Item>
-        <Nav.Item>
+        {/* <Nav.Item>
           <Link to="/inventory" className="nav-link">
             Inventory
           </Link>
-        </Nav.Item>
+        </Nav.Item> */}
         <Nav.Item>
           <Link to="/stuffs" className="nav-link">
             Stuffs
