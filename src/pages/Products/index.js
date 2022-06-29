@@ -43,14 +43,21 @@ const Products = () => {
       body: data,
     }).then((res) => {
       if (res.status === 200)
-        res
-          .json()
-          .then((data) =>
-            setAllProds([
-              { _id: data.pid, name, price, category: cid },
-              ...allProds,
-            ])
-          );
+        res.json().then((data) => {
+          setAllProds([
+            {
+              _id: data.pid,
+              name,
+              price,
+              category: { _id: cid },
+              stock: 0,
+            },
+            ...allProds,
+          ]);
+          setName("");
+          setPrice("");
+          alert("Added");
+        });
       else if (res.status === 404)
         return alert("Category not found! Please refresh and retry.");
       else if (res.status === 401 || res.status === 405)
@@ -92,18 +99,16 @@ const Products = () => {
     <Row className="w-100 p-2">
       <Col lg="6" md="12" sm="12" className="p-2">
         <div className="cat-sel-btns d-flex p-2 border border-1 rounded">
-          {allCatg.map((catg, index) => {
-            return (
-              <Button
-                key={index}
-                variant={curCat === catg._id ? "primary" : "outline-primary"}
-                className="ms-2"
-                onClick={() => setCurCat(catg._id)}
-              >
-                {catg.category}
-              </Button>
-            );
-          })}
+          {allCatg.map((catg, index) => (
+            <Button
+              key={index}
+              variant={curCat === catg._id ? "primary" : "outline-primary"}
+              className="ms-2"
+              onClick={() => setCurCat(catg._id)}
+            >
+              {catg.category}
+            </Button>
+          ))}
         </div>
         <div className="mt-2 d-flex flex-wrap justify-content-center p-2 border border-1 rounded">
           {allProds.map((prod, index) => {
@@ -115,7 +120,7 @@ const Products = () => {
                   name={prod.name}
                   price={prod.price}
                   pid={prod._id}
-                  stock={prod.inStock}
+                  stock={prod.stock}
                 />
               );
           })}

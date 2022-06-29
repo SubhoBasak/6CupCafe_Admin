@@ -21,6 +21,7 @@ const Product = () => {
   const [cid, setCid] = React.useState("");
   const [iid, setIid] = React.useState("");
   const [qnt, setQnt] = React.useState("");
+  const [stock, setStock] = React.useState(0);
 
   const navigate = useNavigate();
   const { pid } = useParams();
@@ -49,6 +50,25 @@ const Product = () => {
     });
   };
 
+  const setStockApi = (e) => {
+    e.preventDefault();
+
+    fetch(process.env.REACT_APP_BASE_URL + "/product/stock", {
+      method: "PUT",
+      headers: {
+        Authorization: localStorage.getItem("token"),
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ pid, stock }),
+    }).then((res) => {
+      if (res.status === 200) return alert("Done");
+      else if (res.status === 404) return navigate("/");
+      else if (res.status === 401 || res.status === 405)
+        return navigate("/login");
+      else return alert("Something went wrong! Please try again.");
+    });
+  };
+
   const addProdIngApi = (e) => {
     e.preventDefault();
 
@@ -61,18 +81,16 @@ const Product = () => {
       body: JSON.stringify({ pid, iid, qnt }),
     }).then((res) => {
       if (res.status === 200)
-        res
-          .json()
-          .then((data) =>
-            setProdIngs([
-              ...prodIngs,
-              {
-                _id: data.ping,
-                ing: { _id: iid, name: data.name, unit: data.unit },
-                qnt,
-              },
-            ])
-          );
+        res.json().then((data) =>
+          setProdIngs([
+            ...prodIngs,
+            {
+              _id: data.ping,
+              ing: { _id: iid, name: data.name, unit: data.unit },
+              qnt,
+            },
+          ])
+        );
     });
   };
 
@@ -139,6 +157,7 @@ const Product = () => {
           setPrice(data.price);
           setCid(data.category);
           setProdIngs(data.ings);
+          setStock(data.stock);
         });
       else if (res.status === 404) return navigate("/products");
       else if (res.status === 401 || res.status === 405)
@@ -222,6 +241,26 @@ const Product = () => {
         sm="12"
         className="p-2 d-flex flex-column align-items-center"
       >
+        <div className="w-100 mt-2 border border-1 p-2 rounded">
+          <p className="w-100 text-center text-warning fs-4">Stock</p>
+          <hr />
+          <Form onSubmit={setStockApi}>
+            <FormLabel>Stock</FormLabel>
+            <div className="d-flex">
+              <FormControl
+                type="number"
+                min="0"
+                placeholder="Enter the current stock"
+                value={stock}
+                onChange={(e) => setStock(e.target.value)}
+                required
+              />
+              <Button variant="outline-primary" className="ms-2" type="submit">
+                Update
+              </Button>
+            </div>
+          </Form>
+        </div>
         <div className="w-100 mt-2 border border-1 p-2 rounded">
           <p className="w-100 text-center text-warning fs-4">Ingredients</p>
           <hr />

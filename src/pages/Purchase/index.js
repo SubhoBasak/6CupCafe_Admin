@@ -57,6 +57,7 @@ const Purchase = () => {
             <th>Date</th>
             <th>Quantity</th>
             <th>Cost</th>
+            <th>Total</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -66,6 +67,7 @@ const Purchase = () => {
               <td>{new Date(data.date).toDateString()}</td>
               <td>{data.qnt}</td>
               <td>{data.cost}</td>
+              <td>{data.qnt * data.cost}</td>
               <td>
                 <Button
                   variant="outline-danger"

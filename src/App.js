@@ -14,6 +14,7 @@ import Products from "./pages/Products";
 import Purchase from "./pages/Purchase";
 import Stuffs from "./pages/Stuffs";
 import Tax from "./pages/Tax";
+import Token from "./pages/Token";
 
 const App = () => {
   return (
@@ -33,6 +34,7 @@ const App = () => {
         <Route path="/purchase/:iid" element={<Purchase />} />
         <Route path="/stuffs" element={<Stuffs />} />
         <Route path="/tax" element={<Tax />} />
+        <Route path="/token" element={<Token />} />
       </Routes>
     </BrowserRouter>
   );

@@ -20,6 +20,8 @@ const Inventory = () => {
 
   const navigate = useNavigate();
 
+  setInterval(() => window.location.reload(), 10000);
+
   const addItemApi = (e) => {
     e.preventDefault();
 
