@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, FormControl, Button, CloseButton, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import "./style.css";
 
 const Category = (props) => {
   const [allCatg, setAllCatg] = React.useState([]);
@@ -84,31 +85,33 @@ const Category = (props) => {
             Add
           </Button>
         </Form>
-        <Table variant="striped" className="mt-2 border border-1 p-2 rounded">
-          <thead>
-            <tr>
-              <th>Category</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {allCatg.map((catg, index) => {
-              return (
-                <tr key={index}>
-                  <td>{catg.category}</td>
-                  <td>
-                    <Button
-                      variant="outline-danger"
-                      onClick={() => delCategoryApi(catg._id)}
-                    >
-                      Delete
-                    </Button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
+        <div className="catg-list">
+          <Table variant="striped" className="mt-2 border border-1 p-2 rounded">
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {allCatg.map((catg, index) => {
+                return (
+                  <tr key={index}>
+                    <td>{catg.category}</td>
+                    <td>
+                      <Button
+                        variant="outline-danger"
+                        onClick={() => delCategoryApi(catg._id)}
+                      >
+                        Delete
+                      </Button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        </div>
       </div>
     </div>
   );
