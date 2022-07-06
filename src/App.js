@@ -6,6 +6,7 @@ import Appbar from "./components/Appbar";
 
 import Customer from "./pages/Customer";
 import Customers from "./pages/Customers";
+import Dashboard from "./pages/Dashboard";
 import Delivery from "./pages/Delivery";
 import Inventory from "./pages/Inventory";
 import Login from "./pages/Login";
@@ -21,6 +22,7 @@ const App = () => {
     <BrowserRouter>
       <Appbar />
       <Routes>
+        <Route path="/" exact element={<Dashboard />} />
         <Route
           path="/customer/:cid/:name/:phone/:reward"
           element={<Customer />}

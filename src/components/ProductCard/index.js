@@ -16,9 +16,15 @@ const ProductCard = (props) => {
         alt="product"
       />
       <p>{props.name}</p>
-      <Badge pill bg="warning" className="stock-out text-dark">
-        Stock: {props.stock}
-      </Badge>
+      {props.stock > 0 ? (
+        <Badge pill bg="warning" className="stock-out text-dark">
+          Stock: {props.stock}
+        </Badge>
+      ) : (
+        <Badge pill bg="danger" className="stock-out text-light">
+          Stock Out
+        </Badge>
+      )}
       <p className="fw-bold text-danger">Rs. {props.price}</p>
     </div>
   );
