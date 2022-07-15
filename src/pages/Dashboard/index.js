@@ -3,7 +3,6 @@ import { Table, Row, Col, FormLabel, FormControl } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-  const [allProducts, setAllProducts] = React.useState({});
   const [allDelv, setAllDevl] = React.useState({});
   const [EBAmount, setEBAmount] = React.useState(0.0);
   const [EBCount, setEBCount] = React.useState(0);
@@ -19,23 +18,6 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    fetch(process.env.REACT_APP_BASE_URL + "/product", {
-      method: "GET",
-      headers: { Authorization: localStorage.getItem("token") },
-    }).then((res) => {
-      if (res.status === 200)
-        res.json().then((data) => {
-          data.map((prd) => {
-            allProducts[prd._id] = [prd.name, 0];
-            return null;
-          });
-          setAllProducts({ ...allProducts });
-        });
-      else if (res.status === 401 || res.status === 405)
-        return navigate("/login");
-      else return alert("Something went wrong! Please try again.");
-    });
-
     fetch(process.env.REACT_APP_BASE_URL + "/delivery", {
       method: "GET",
       headers: { Authorization: localStorage.getItem("token") },
@@ -96,14 +78,6 @@ const Dashboard = () => {
               tmp[1] + 1,
               tmp[2] + data[i].total,
             ];
-
-            data[i].items.map((item) => {
-              let tmp = allProducts[item.item];
-              allProducts[item.item] = [tmp[0], tmp[1] + item.quantity];
-              return null;
-            });
-
-            setAllProducts({ ...allProducts });
           }
           setCashCount(countCash);
           setCardCount(countCard);
@@ -216,28 +190,6 @@ const Dashboard = () => {
                     <td className="fw-bold text-secondary">{delv[1][0]}</td>
                     <td className="fw-bold text-primary">{delv[1][1]}</td>
                     <td className="fw-bold text-danger">{delv[1][2]}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          </div>
-          <div className="border border-1 p-3 rounded mt-4">
-            <h4 className="w-100 fs-3 text-center text-warning">
-              Product report
-            </h4>
-            <hr />
-            <Table striped title="Product Sale">
-              <thead>
-                <tr>
-                  <th>Item</th>
-                  <th>Count</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Object.entries(allProducts).map((prod, index) => (
-                  <tr key={index}>
-                    <td className="fw-bold text-secondary">{prod[1][0]}</td>
-                    <td className="fw-bold text-primary">{prod[1][1]}</td>
                   </tr>
                 ))}
               </tbody>
