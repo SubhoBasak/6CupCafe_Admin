@@ -41,27 +41,29 @@ const Dashboard = () => {
     }).then((res) => {
       if (res.status === 200)
         res.json().then((data) => {
-          // setFlatReport(data)
           let countEb = 0,
             countDlv = 0,
             countCash = 0,
             countCard = 0,
-            countUpi = 0;
+            countUpi = 0,
+            cashTotal = 0,
+            cardTotal = 0,
+            upiTotal = 0;
           for (let i = 0; i < data.length; i++) {
             switch (data[i].payMethod) {
               case 0: {
                 countCash++;
-                setCashAmount(cashAmount + data[i].total);
+                cashTotal += data[i].total;
                 break;
               }
               case 1: {
                 countCard++;
-                setCardAmount(cardAmount + data[i].total);
+                cardTotal += data[i].total;
                 break;
               }
               default:
                 countUpi++;
-                setUpiAmount(upiAmount + data[i].total);
+                upiTotal += data[i].total;
             }
 
             if (data[i].orderType === 0) {
@@ -70,20 +72,24 @@ const Dashboard = () => {
             } else {
               countDlv++;
               setDlvAmount(dlvAmount + data[i].total);
-            }
 
-            let tmp = allDelv[data[i].delivery];
-            allDelv[data[i].delivery] = [
-              tmp[0],
-              tmp[1] + 1,
-              tmp[2] + data[i].total,
-            ];
+              let tmp = allDelv[data[i].delivery];
+              allDelv[data[i].delivery] = [
+                tmp[0],
+                tmp[1] + 1,
+                tmp[2] + data[i].total,
+              ];
+            }
           }
+          setAllDevl(allDelv);
           setCashCount(countCash);
           setCardCount(countCard);
           setUpiCount(countUpi);
           setEBCount(countEb);
           setDlvCount(countDlv);
+          setCashAmount(cashTotal);
+          setCardAmount(cardTotal);
+          setUpiAmount(upiTotal);
         });
       else if (res.status === 401 || res.status === 405)
         return navigate("/login");
