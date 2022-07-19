@@ -1,8 +1,17 @@
 import React from "react";
-import { Table, Row, Col, FormLabel, FormControl } from "react-bootstrap";
+import {
+  Table,
+  Row,
+  Col,
+  FormLabel,
+  FormControl,
+  FormSelect,
+  Button,
+} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+  const [allProd, setAllProd] = React.useState([]);
   const [allDelv, setAllDevl] = React.useState({});
   const [EBAmount, setEBAmount] = React.useState(0.0);
   const [EBCount, setEBCount] = React.useState(0);
@@ -14,6 +23,7 @@ const Dashboard = () => {
   const [cardCount, setCardCount] = React.useState(0);
   const [upiAmount, setUpiAmount] = React.useState(0.0);
   const [upiCount, setUpiCount] = React.useState(0);
+  const [prd, setPrd] = React.useState("");
 
   const navigate = useNavigate();
 
@@ -29,6 +39,22 @@ const Dashboard = () => {
             return null;
           });
           setAllDevl({ ...allDelv });
+        });
+      else if (res.status === 401 || res.status === 405)
+        return navigate("/login");
+      else return alert("Something went wrong! Please try again.");
+    });
+
+    fetch(process.env.REACT_APP_BASE_URL + "/product/names", {
+      method: "GET",
+      headers: { Authorization: localStorage.getItem("token") },
+    }).then((res) => {
+      if (res.status === 200)
+        res.json().then((data) => {
+          setAllProd(data);
+          if (data && data.length > 0) {
+            setPrd(data[0]._id);
+          }
         });
       else if (res.status === 401 || res.status === 405)
         return navigate("/login");
@@ -108,6 +134,7 @@ const Dashboard = () => {
           End Date
         </FormLabel>
         <FormControl type="date" />
+        <Button className="ms-2 text-nowrap">Get Report</Button>
       </div>
       <Row className="w-100 p-3">
         <Col lg="6" md="12" sm="12">
@@ -174,7 +201,31 @@ const Dashboard = () => {
           </div>
         </Col>
         <Col lg="8" md="12" sm="12" className="p-3">
-          <div className="border border-1 p-3 rounded"></div>
+          <div className="border border-1 p-3 rounded">
+            <h4 className="w-100 fs-3 text-center text-warning">
+              Product report
+            </h4>
+            <hr />
+            <FormLabel>
+              <strong>Select product</strong>
+            </FormLabel>
+            <FormSelect
+              className="mb-3"
+              value={prd}
+              onChange={(e) => setPrd(e.target.value)}
+            >
+              {allProd.map((data, index) => (
+                <option key={index} value={data._id}>
+                  {data.name} : {data.price}
+                </option>
+              ))}
+            </FormSelect>
+            <div className="w-100 d-flex justify-content-center">
+              <Button onClick={() => navigate("/report/" + prd)}>
+                Get Report
+              </Button>
+            </div>
+          </div>
         </Col>
         <Col lg="4" md="12" sm="12" className="p-3">
           <div className="border border-1 p-3 rounded mt-4">
