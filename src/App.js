@@ -23,7 +23,8 @@ const App = () => {
     <BrowserRouter>
       <Appbar />
       <Routes>
-        <Route path="/" exact element={<Dashboard />} />
+        <Route path="/" exact element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route
           path="/customer/:cid/:name/:phone/:reward"
           element={<Customer />}
@@ -35,7 +36,7 @@ const App = () => {
         <Route path="/product/:pid" element={<Product />} />
         <Route path="/products" element={<Products />} />
         <Route path="/purchase/:iid" element={<Purchase />} />
-        <Route path="/report/:pid" element={<Report />} />
+        <Route path="/report/:year/:pid" element={<Report />} />
         <Route path="/stuffs" element={<Stuffs />} />
         <Route path="/tax" element={<Tax />} />
         <Route path="/token" element={<Token />} />

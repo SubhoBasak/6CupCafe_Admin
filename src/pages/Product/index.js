@@ -81,7 +81,7 @@ const Product = () => {
       body: JSON.stringify({ pid, stock }),
     }).then((res) => {
       if (res.status === 200) return alert("Done");
-      else if (res.status === 404) return navigate("/");
+      else if (res.status === 404) return navigate("/dashboard");
       else if (res.status === 401 || res.status === 405)
         return navigate("/login");
       else return alert("Something went wrong! Please try again.");

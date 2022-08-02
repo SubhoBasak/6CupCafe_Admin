@@ -35,7 +35,7 @@ const Login = () => {
           localStorage.setItem("token", data.token);
           localStorage.setItem("name", data.name);
 
-          navigate("/");
+          navigate("/dashboard");
         });
       } else if (res.status === 401) alert("Incorrect email or password!");
       else alert("Something went wrong! Please try again.");
