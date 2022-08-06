@@ -63,6 +63,11 @@ const Appbar = () => {
           </Link>
         </Nav.Item>
         <Nav.Item>
+          <Link to="/discounts" className="nav-link">
+            Discounts
+          </Link>
+        </Nav.Item>
+        <Nav.Item>
           <Link to="/token" className="nav-link">
             Token
           </Link>
