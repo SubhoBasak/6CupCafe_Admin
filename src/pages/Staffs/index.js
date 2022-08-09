@@ -11,10 +11,10 @@ import {
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-import EditStuff from "../../components/EditStuff";
+import EditStaff from "../../components/EditStaff";
 
-const Stuffs = () => {
-  const [allStuffs, setAllStuffs] = React.useState([]);
+const Staffs = () => {
+  const [allStaffs, setAllStaffs] = React.useState([]);
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [role, setRole] = React.useState("");
@@ -23,7 +23,7 @@ const Stuffs = () => {
 
   const navigate = useNavigate();
 
-  const addStuffApi = (e) => {
+  const addStaffApi = (e) => {
     e.preventDefault();
 
     if (!name || !email || !password)
@@ -38,7 +38,7 @@ const Stuffs = () => {
       body: JSON.stringify({ name, email, role, password }),
     }).then((res) => {
       if (res.status === 200) {
-        setAllStuffs([{ name, email, role }, ...allStuffs]);
+        setAllStaffs([{ name, email, role }, ...allStaffs]);
         setName("");
         setEmail("");
         setRole("0");
@@ -51,7 +51,7 @@ const Stuffs = () => {
     });
   };
 
-  const delStuffApi = (email) => {
+  const delStaffApi = (email) => {
     fetch(process.env.REACT_APP_BASE_URL + "/user/employee", {
       method: "DELETE",
       headers: {
@@ -61,7 +61,7 @@ const Stuffs = () => {
       body: JSON.stringify({ email }),
     }).then((res) => {
       if (res.status === 200)
-        return setAllStuffs(allStuffs.filter((stuff) => stuff.email !== email));
+        return setAllStaffs(allStaffs.filter((staff) => staff.email !== email));
       else if (res.status === 401 || res.status === 405)
         return navigate("/login");
       else return alert("Something went wrong! Please try again.");
@@ -75,7 +75,7 @@ const Stuffs = () => {
       method: "GET",
       headers: { Authorization: localStorage.getItem("token") },
     }).then((res) => {
-      if (res.status === 200) res.json().then((data) => setAllStuffs(data));
+      if (res.status === 200) res.json().then((data) => setAllStaffs(data));
     });
   }, [navigate]);
 
@@ -92,22 +92,22 @@ const Stuffs = () => {
             </tr>
           </thead>
           <tbody>
-            {allStuffs.map((stuff, index) => {
+            {allStaffs.map((staff, index) => {
               return (
                 <tr key={index}>
-                  <td>{stuff.name}</td>
-                  <td>{stuff.email}</td>
+                  <td>{staff.name}</td>
+                  <td>{staff.email}</td>
                   <td>
-                    {stuff.role === 0
+                    {staff.role === 0
                       ? "Admin"
-                      : stuff.role === 1
+                      : staff.role === 1
                       ? "Cashier"
                       : "Cook"}
                   </td>
                   <td>
                     <Button
                       variant="outline-danger"
-                      onClick={() => delStuffApi(stuff.email)}
+                      onClick={() => delStaffApi(staff.email)}
                     >
                       Remove
                     </Button>
@@ -116,10 +116,10 @@ const Stuffs = () => {
                       className="ms-2"
                       onClick={() =>
                         setEdit({
-                          eid: stuff._id,
-                          name: stuff.name,
-                          email: stuff.email,
-                          role: stuff.role,
+                          eid: staff._id,
+                          name: staff.name,
+                          email: staff.email,
+                          role: staff.role,
                         })
                       }
                     >
@@ -133,8 +133,8 @@ const Stuffs = () => {
         </Table>
       </Col>
       <Col lg="4" md="5" sm="12" className="p-2">
-        <Form className="border border-1 p-2 rounded" onSubmit={addStuffApi}>
-          <p className="w-100 text-center text-warning fs-4">Add Stuff</p>
+        <Form className="border border-1 p-2 rounded" onSubmit={addStaffApi}>
+          <p className="w-100 text-center text-warning fs-4">Add Staff</p>
           <hr />
           <div className="mb-3">
             <FormLabel>Name</FormLabel>
@@ -187,14 +187,14 @@ const Stuffs = () => {
         </Form>
       </Col>
       {edit ? (
-        <EditStuff
+        <EditStaff
           eid={edit.eid}
           name={edit.name}
           email={edit.email}
           role={edit.role}
           close={() => setEdit(null)}
-          allStuffs={allStuffs}
-          setAllStuffs={setAllStuffs}
+          allStaffs={allStaffs}
+          setAllStaffs={setAllStaffs}
         />
       ) : (
         <></>
@@ -203,4 +203,4 @@ const Stuffs = () => {
   );
 };
 
-export default Stuffs;
+export default Staffs;

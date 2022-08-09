@@ -9,7 +9,7 @@ const Appbar = () => {
       <div className="nav-title-bar d-flex align-items-center">
         <img src={require("../../assets/images/logo.png")} alt="logo" />
         <p className="fs-4 text-light my-0 ms-3 fw-light">
-          <strong>Inibila</strong>
+          <strong>Inibila - An Ethiopian Edition</strong>
         </p>
         <div className="flex-grow-1 d-flex justify-content-end">
           <Button
@@ -43,8 +43,8 @@ const Appbar = () => {
           </Link>
         </Nav.Item> */}
         <Nav.Item>
-          <Link to="/stuffs" className="nav-link">
-            Stuffs
+          <Link to="/staffs" className="nav-link">
+            Staffs
           </Link>
         </Nav.Item>
         <Nav.Item>

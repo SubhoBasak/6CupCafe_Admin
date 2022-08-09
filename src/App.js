@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 
 import Appbar from "./components/Appbar";
@@ -15,13 +15,13 @@ import Product from "./pages/Product";
 import Products from "./pages/Products";
 import Purchase from "./pages/Purchase";
 import Report from "./pages/Report";
-import Stuffs from "./pages/Stuffs";
+import Staffs from "./pages/Staffs";
 import Tax from "./pages/Tax";
 import Token from "./pages/Token";
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <MemoryRouter>
       <Appbar />
       <Routes>
         <Route path="/" exact element={<Login />} />
@@ -39,11 +39,11 @@ const App = () => {
         <Route path="/products" element={<Products />} />
         <Route path="/purchase/:iid" element={<Purchase />} />
         <Route path="/report/:year/:pid" element={<Report />} />
-        <Route path="/stuffs" element={<Stuffs />} />
+        <Route path="/staffs" element={<Staffs />} />
         <Route path="/tax" element={<Tax />} />
         <Route path="/token" element={<Token />} />
       </Routes>
-    </BrowserRouter>
+    </MemoryRouter>
   );
 };
 

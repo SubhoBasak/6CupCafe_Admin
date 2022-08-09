@@ -9,7 +9,7 @@ import {
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-const EditStuff = (props) => {
+const EditStaff = (props) => {
   const [name, setName] = React.useState(props.name || "");
   const [email, setEmail] = React.useState(props.email || "");
   const [role, setRole] = React.useState(props.role || "");
@@ -17,7 +17,7 @@ const EditStuff = (props) => {
 
   const navigate = useNavigate();
 
-  const editStuffApi = (e) => {
+  const editStaffApi = (e) => {
     e.preventDefault();
 
     if (!name || !email) return alert("Please fill all the details");
@@ -31,14 +31,14 @@ const EditStuff = (props) => {
       body: JSON.stringify({ eid: props.eid, name, email, role, password }),
     }).then((res) => {
       if (res.status === 200) {
-        for (let i = 0; i < props.allStuffs.length; i++) {
-          if (props.allStuffs[i]._id === props.eid) {
-            props.allStuffs[i].name = name;
-            props.allStuffs[i].email = email;
-            props.allStuffs[i].role = role;
+        for (let i = 0; i < props.allStaffs.length; i++) {
+          if (props.allStaffs[i]._id === props.eid) {
+            props.allStaffs[i].name = name;
+            props.allStaffs[i].email = email;
+            props.allStaffs[i].role = role;
           }
         }
-        props.setAllStuffs(props.allStuffs);
+        props.setAllStaffs(props.allStaffs);
         props.close();
       } else if (res.status === 401 || res.status === 405)
         return navigate("/login");
@@ -48,11 +48,11 @@ const EditStuff = (props) => {
 
   return (
     <div className="sub-canvas">
-      <Form className="sub-form" onSubmit={editStuffApi}>
+      <Form className="sub-form" onSubmit={editStaffApi}>
         <div className="w-100 d-flex justify-content-end">
           <CloseButton onClick={props.close} />
         </div>
-        <p className="w-100 text-center text-warning fs-4">Edit Stuff</p>
+        <p className="w-100 text-center text-warning fs-4">Edit Staff</p>
         <hr />
         <div className="mb-3">
           <FormLabel>Name</FormLabel>
@@ -106,4 +106,4 @@ const EditStuff = (props) => {
   );
 };
 
-export default EditStuff;
+export default EditStaff;
