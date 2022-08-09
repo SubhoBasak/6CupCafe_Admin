@@ -11,6 +11,8 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const TODAY = new Date();
+
+TODAY.setDate(TODAY.getDate() + 1);
 const DATE_TO =
   TODAY.getFullYear() +
   "-" +
@@ -134,17 +136,23 @@ const Dashboard = () => {
                 <tr>
                   <td className="fw-bold text-secondary">Cash</td>
                   <td className="fw-bold text-primary">{cashCount}</td>
-                  <td className="fw-bold text-danger">Rs. {cashAmount}/-</td>
+                  <td className="fw-bold text-danger">
+                    Rs. {cashAmount.toFixed(2)}/-
+                  </td>
                 </tr>
                 <tr>
                   <td className="fw-bold text-secondary">Card</td>
                   <td className="fw-bold text-primary">{cardCount}</td>
-                  <td className="fw-bold text-danger">Rs. {cardAmount}/-</td>
+                  <td className="fw-bold text-danger">
+                    Rs. {cardAmount.toFixed(2)}/-
+                  </td>
                 </tr>
                 <tr>
                   <td className="fw-bold text-secondary">UPI</td>
                   <td className="fw-bold text-primary">{upiCount}</td>
-                  <td className="fw-bold text-danger">Rs. {upiAmount}/-</td>
+                  <td className="fw-bold text-danger">
+                    Rs. {upiAmount.toFixed(2)}/-
+                  </td>
                 </tr>
               </tbody>
             </Table>
@@ -168,12 +176,16 @@ const Dashboard = () => {
                 <tr>
                   <td className="fw-bold text-secondary">Express Billing</td>
                   <td className="fw-bold text-primary">{EBCount}</td>
-                  <td className="fw-bold text-danger">Rs. {EBAmount}/-</td>
+                  <td className="fw-bold text-danger">
+                    Rs. {EBAmount.toFixed(2)}/-
+                  </td>
                 </tr>
                 <tr>
                   <td className="fw-bold text-secondary">Home Delivery</td>
                   <td className="fw-bold text-primary">{dlvCount}</td>
-                  <td className="fw-bold text-danger">Rs. {dlvAmount}/-</td>
+                  <td className="fw-bold text-danger">
+                    Rs. {dlvAmount.toFixed(2)}/-
+                  </td>
                 </tr>
               </tbody>
             </Table>
@@ -248,7 +260,9 @@ const Dashboard = () => {
                   <tr key={index}>
                     <td className="fw-bold text-secondary">{data.name}</td>
                     <td className="fw-bold text-primary">{data.count}</td>
-                    <td className="fw-bold text-danger">{data.total}</td>
+                    <td className="fw-bold text-danger">
+                      {data.total.toFixed(2)}
+                    </td>
                   </tr>
                 ))}
               </tbody>
