@@ -21,6 +21,7 @@ const Products = () => {
   const [name, setName] = React.useState("");
   const [price, setPrice] = React.useState("");
   const [image, setImage] = React.useState("");
+  const [note, setNote] = React.useState("");
   const [cid, setCid] = React.useState("");
   const [catgWin, setCatgWin] = React.useState(false);
 
@@ -35,6 +36,7 @@ const Products = () => {
     data.append("name", name);
     data.append("price", price);
     data.append("cid", cid);
+    data.append("note", note);
 
     fetch(process.env.REACT_APP_BASE_URL + "/product", {
       method: "POST",
@@ -181,6 +183,16 @@ const Products = () => {
                 );
               })}
             </FormSelect>
+          </div>
+          <div className="mb-3">
+            <FormLabel>Note</FormLabel>
+            <textarea
+              className="form-control"
+              rows="5"
+              placeholder="Enter product note (optional)"
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+            ></textarea>
           </div>
           <div className="mb-3 d-flex justify-content-center">
             <Button type="submit">Add</Button>
