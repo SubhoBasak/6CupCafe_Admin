@@ -15,6 +15,7 @@ import Product from "./pages/Product";
 import Products from "./pages/Products";
 import Purchase from "./pages/Purchase";
 import Report from "./pages/Report";
+import Sales from "./pages/Sales";
 import Staffs from "./pages/Staffs";
 import Tax from "./pages/Tax";
 import Token from "./pages/Token";
@@ -39,6 +40,7 @@ const App = () => {
         <Route path="/products" element={<Products />} />
         <Route path="/purchase/:iid" element={<Purchase />} />
         <Route path="/report/:year/:pid" element={<Report />} />
+        <Route path="/sales" element={<Sales />} />
         <Route path="/staffs" element={<Staffs />} />
         <Route path="/tax" element={<Tax />} />
         <Route path="/token" element={<Token />} />

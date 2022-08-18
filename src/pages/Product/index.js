@@ -14,7 +14,6 @@ import "./style.css";
 const Product = () => {
   const [allCatg, setAllCatg] = React.useState([]);
   const [prodIngs, setProdIngs] = React.useState([]);
-  const [combo, setCombo] = React.useState([]);
   const [ings, setIngs] = React.useState([]);
   const [name, setName] = React.useState("");
   const [price, setPrice] = React.useState("");
@@ -23,7 +22,7 @@ const Product = () => {
   const [iid, setIid] = React.useState("");
   const [qnt, setQnt] = React.useState("");
   const [stock, setStock] = React.useState(0);
-  const [newCombo, setNewCombo] = React.useState("");
+  const [note, setNote] = React.useState("");
 
   const navigate = useNavigate();
   const { pid } = useParams();
@@ -38,6 +37,7 @@ const Product = () => {
     data.append("price", price);
     data.append("image", image);
     data.append("cid", cid);
+    data.append("note", note);
 
     fetch(process.env.REACT_APP_BASE_URL + "/product", {
       method: "PUT",
@@ -84,45 +84,6 @@ const Product = () => {
     }).then((res) => {
       if (res.status === 200) return alert("Done");
       else if (res.status === 404) return navigate("/dashboard");
-      else if (res.status === 401 || res.status === 405)
-        return navigate("/login");
-      else return alert("Something went wrong! Please try again.");
-    });
-  };
-
-  const addCombo = (e) => {
-    e.preventDefault();
-
-    fetch(process.env.REACT_APP_BASE_URL + "/combo", {
-      method: "POST",
-      headers: {
-        Authorization: localStorage.getItem("token"),
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ pid, combo: newCombo }),
-    }).then((res) => {
-      if (res.status === 200)
-        res.json().then((data) => {
-          setCombo([...combo, { _id: data._id, combo: newCombo }]);
-          setNewCombo("");
-        });
-      else if (res.status === 404) return navigate("/products");
-      else if (res.status === 401 || res.status === 405)
-        return navigate("/login");
-      else return alert("Something went wrong! Please try again.");
-    });
-  };
-
-  const delCombo = (id) => {
-    fetch(process.env.REACT_APP_BASE_URL + "/combo", {
-      method: "DELETE",
-      headers: {
-        Authorization: localStorage.getItem("token"),
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ combo: id }),
-    }).then((res) => {
-      if (res.status === 200) setCombo(combo.filter((data) => data._id !== id));
       else if (res.status === 401 || res.status === 405)
         return navigate("/login");
       else return alert("Something went wrong! Please try again.");
@@ -218,23 +179,8 @@ const Product = () => {
           setCid(data.category);
           setProdIngs(data.ings);
           setStock(data.stock);
+          setNote(data.note);
         });
-      else if (res.status === 404) return navigate("/products");
-      else if (res.status === 401 || res.status === 405)
-        return navigate("/login");
-      else return alert("Something went wrong! Please try again.");
-    });
-
-    fetch(
-      process.env.REACT_APP_BASE_URL + "/combo?" + new URLSearchParams({ pid }),
-      {
-        method: "GET",
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      }
-    ).then((res) => {
-      if (res.status === 200) res.json().then((data) => setCombo(data));
       else if (res.status === 404) return navigate("/products");
       else if (res.status === 401 || res.status === 405)
         return navigate("/login");
@@ -306,6 +252,16 @@ const Product = () => {
               })}
             </FormSelect>
           </div>
+          <div className="mb-3">
+            <FormLabel>Note</FormLabel>
+            <textarea
+              className="form-control"
+              rows="10"
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+              placeholder="Enter the product note"
+            ></textarea>
+          </div>
           <div className="mb-3 d-flex justify-content-center">
             <Button variant="outline-primary" type="submit">
               Save
@@ -344,40 +300,6 @@ const Product = () => {
                 Update
               </Button>
             </div>
-          </Form>
-        </div>
-        <div className="w-100 mt-2 border border-1 p-2 rounded">
-          <p className="w-100 text-center text-warning fs-4">Combo</p>
-          <hr />
-          <div className="mb-3 p-3">
-            {combo.map((data, index) => (
-              <div
-                key={index}
-                className="mb-3 bg-light rounded p-2 d-flex align-items-center"
-              >
-                <p className="fs-4 m-0 p-0 ps-3 flex-grow-1">{data.combo}</p>
-                <Button
-                  variant="outline-danger"
-                  onClick={() => delCombo(data._id)}
-                >
-                  Remove
-                </Button>
-              </div>
-            ))}
-          </div>
-          <hr />
-          <Form className="d-flex" onSubmit={addCombo}>
-            <FormControl
-              type="text"
-              maxLength="100"
-              placeholder="Enter combo name"
-              value={newCombo}
-              onChange={(e) => setNewCombo(e.target.value)}
-              required
-            />
-            <Button type="submit" className="ms-2">
-              Add
-            </Button>
           </Form>
         </div>
         {/* <div className="w-100 mt-2 border border-1 p-2 rounded">
