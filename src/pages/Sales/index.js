@@ -142,15 +142,19 @@ const Orders = () => {
                 {order.note}
               </Alert>
             ) : null}
-            {order.items.map((item, index) => (
-              <ProductCard
-                key={index}
-                pid={item.item._id}
-                name={item.item.name}
-                stock={item.quantity}
-                history
-              />
-            ))}
+            {order.items.map((item, index) => {
+              if (item.item && item.item._id)
+                return (
+                  <ProductCard
+                    key={index}
+                    pid={item.item._id}
+                    name={item.item.name}
+                    stock={item.quantity}
+                    history
+                  />
+                );
+              else return <p>Item deleted</p>;
+            })}
           </div>
         ))}
       </div>
